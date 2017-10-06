@@ -11,13 +11,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-import ru.vol2hv.moikaback.MoikabackApplication;
 import ru.vol2hv.moikaback.entity.City;
-
 import java.util.List;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = MoikabackApplication.class)
+@SpringBootTest
 @Transactional
 @Commit
 //@Rollback
