@@ -5,11 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Self  implements Serializable  {
+public class CityLinks implements Serializable  {
     private String href;
     }

@@ -5,14 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CityLisnRest implements Serializable {
-    private int size;
-    private int totalElements;
-    private int totalPages;
-    private int number;
+public class CityRestAll implements Serializable {
+    private List<CityRest> cities;
+    private  LinksOut _links;
+    private Page page;
 }

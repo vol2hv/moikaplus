@@ -1,23 +1,18 @@
-package ru.vol2hv.moikaback.entity;
+package ru.vol2hv.moikaback.entity.json;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.io.Serializable;
 
-@Entity
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class City implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
-    private String name;
-    private String region;
+public class Page implements Serializable {
+    private int size;
+    private int totalElements;
+    private int totalPages;
+    private int number;
 }

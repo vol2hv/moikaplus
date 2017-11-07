@@ -10,6 +10,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Self  implements Serializable  {
+public class SelfOut implements Serializable  {
     private String href;
+    private boolean templated;
     }

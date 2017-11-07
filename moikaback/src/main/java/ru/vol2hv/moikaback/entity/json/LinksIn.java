@@ -11,8 +11,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CityRest extends City implements Serializable  {
-    private String name;
-    private String region;
-    private LinksIn _links;
-}
+public class LinksIn extends City implements Serializable  {
+    private Self self;
+    private CityLinks city;
+    }

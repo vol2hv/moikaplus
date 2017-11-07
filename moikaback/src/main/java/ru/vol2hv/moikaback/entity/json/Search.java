@@ -10,6 +10,6 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Self  implements Serializable  {
+public class Search implements Serializable  {
     private String href;
     }

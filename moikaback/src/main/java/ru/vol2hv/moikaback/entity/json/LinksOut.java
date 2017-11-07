@@ -11,7 +11,8 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LinksIn extends City implements Serializable  {
-    private Self self;
-    private CityLinks city;
+public class LinksOut extends City implements Serializable  {
+    private SelfOut self;
+    private Profile profile;
+    private Search search;
     }
