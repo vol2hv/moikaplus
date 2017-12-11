@@ -1,22 +1,25 @@
-package ru.vol2hv.moikaback.entity;
+package ru.vol2hv.moikaback.entity.json;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.ResourceSupport;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.io.Serializable;
 
-@Entity
+
+class PersonResource extends ResourceSupport {
+
+    String firstname;
+    String lastname;
+}
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class City implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+public class EntityWithLinks<T> implements Serializable {
+    Link link = new Link("http://localhost:8080/something");
     private Long id;
     private String name;
     private String region;
