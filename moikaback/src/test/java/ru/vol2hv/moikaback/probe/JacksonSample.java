@@ -44,8 +44,17 @@ public class JacksonSample {
 //        jacksonSample.simple3();
 //        hateaos();
 //        hateaosHttp();
-        citySample();
+//        citySample();
+        sampleN();
 
+    }
+
+    private static void sampleN() throws IOException {
+        ObjectMapper mapper = new ObjectMapper(); // create once, reuse
+        HrefBig hrefBig = new HrefBig("href1",true);
+        String jsonString = mapper.writeValueAsString(hrefBig);
+        jsonString="{\"href\":\"href2\"}";
+        HrefBig hrefBig1 = mapper.readValue(jsonString, HrefBig.class);
     }
 
     private static void citySample() throws IOException {
