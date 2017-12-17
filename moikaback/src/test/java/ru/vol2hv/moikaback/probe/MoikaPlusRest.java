@@ -11,6 +11,6 @@ public class MoikaPlusRest {
         TestRestTemplate testRestTemplate = new TestRestTemplate("user", "111");
         ResponseEntity<String> response = testRestTemplate.getForEntity(url + "/cities", String.class);
         System.out.println(response.getBody());
-        ResponseEntity<CityDto> cityDto = testRestTemplate.getForEntity(url + "/cities", CityDto.class);
+//        ResponseEntity<CityDto> cityDto = testRestTemplate.getForEntity(url + "/cities", CityDto.class);
     }
 }

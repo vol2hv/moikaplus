@@ -11,6 +11,6 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LinksForEntity<T> implements Serializable {
-    Map<String, String> _links = new HashMap<>();
+public class LinksForEntity implements Serializable {
+    public Map<String, HrefBig> _links = new HashMap<>();
 }

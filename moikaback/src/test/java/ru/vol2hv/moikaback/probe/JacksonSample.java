@@ -13,6 +13,7 @@ import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import ru.vol2hv.moikaback.entity.City;
+import ru.vol2hv.moikaback.entity.json.HrefBig;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,77 +52,29 @@ public class JacksonSample {
 
     private static void sampleN() throws IOException {
         ObjectMapper mapper = new ObjectMapper(); // create once, reuse
-        HrefBig hrefBig = new HrefBig("href1",true);
+        HrefBig hrefBig = new HrefBig("href1", true);
         String jsonString = mapper.writeValueAsString(hrefBig);
-        jsonString="{\"href\":\"href2\"}";
+        jsonString = "{\"href\":\"href2\"}";
         HrefBig hrefBig1 = mapper.readValue(jsonString, HrefBig.class);
-    }
-
-    private static void citySample() throws IOException {
-        String str1 = "{\n" +
-                "    \"self\" : {\n" +
-                "      \"href\" : \"http://localhost:8080/cities{?page,size,sort}\",\n" +
-                "      \"templated\" : true\n" +
+        jsonString = "{\n" +
+                "    \"self\": {\n" +
+                "      \"href\": \"http://localhost:8080/api/cities{?page,size,sort}\",\n" +
+                "      \"templated\": true\n" +
                 "    },\n" +
-                "    \"profile\" : {\n" +
-                "      \"href\" : \"http://localhost:8080/profile/cities\"\n" +
+                "    \"profile\": {\n" +
+                "      \"href\": \"http://localhost:8080/api/profile/cities\"\n" +
                 "    },\n" +
-                "    \"search\" : {\n" +
-                "      \"href\" : \"http://localhost:8080/cities/search\"\n" +
+                "    \"search\": {\n" +
+                "      \"href\": \"http://localhost:8080/api/cities/search\"\n" +
                 "    }\n" +
                 "  }";
-        String str = "{\n" +
-                "  \"_embedded\" : {\n" +
-                "    \"cities\" : [ {\n" +
-                "      \"name\" : \"city1\",\n" +
-                "      \"region\" : \"region1\",\n" +
-                "      \"_links\" : {\n" +
-                "        \"self\" : {\n" +
-                "          \"href\" : \"http://localhost:8080/cities/1\"\n" +
-                "        },\n" +
-                "        \"city\" : {\n" +
-                "          \"href\" : \"http://localhost:8080/cities/1\"\n" +
-                "        }\n" +
-                "      }\n" +
-                "    }, {\n" +
-                "      \"name\" : \"city2\",\n" +
-                "      \"region\" : \"region2\",\n" +
-                "      \"_links\" : {\n" +
-                "        \"self\" : {\n" +
-                "          \"href\" : \"http://localhost:8080/cities/2\"\n" +
-                "        },\n" +
-                "        \"city\" : {\n" +
-                "          \"href\" : \"http://localhost:8080/cities/2\"\n" +
-                "        }\n" +
-                "      }\n" +
-                "    } ]\n" +
-                "  },\n" +
-                "  \"_links\" : {\n" +
-                "    \"self\" : {\n" +
-                "      \"href\" : \"http://localhost:8080/cities{?page,size,sort}\",\n" +
-                "      \"templated\" : true\n" +
-                "    },\n" +
-                "    \"profile\" : {\n" +
-                "      \"href\" : \"http://localhost:8080/profile/cities\"\n" +
-                "    },\n" +
-                "    \"search\" : {\n" +
-                "      \"href\" : \"http://localhost:8080/cities/search\"\n" +
-                "    }\n" +
-                "  },\n" +
-                "  \"page\" : {\n" +
-                "    \"size\" : 20,\n" +
-                "    \"totalElements\" : 2,\n" +
-                "    \"totalPages\" : 1,\n" +
-                "    \"number\" : 0\n" +
-                "  }\n" +
-                "}";
-        ObjectMapper mapper = new ObjectMapper(); // create once, reuse
-        City city = new City (null,"c","r");
-        String jsonString = mapper.writeValueAsString(city);
-        CityWithRel CityWithRel = new CityWithRel("c","r",null);
-        jsonString = mapper.writeValueAsString(CityWithRel);
-        LinksOut out = mapper.readValue(str1, LinksOut.class);
-        CityDto  CityDto =  mapper.readValue(str, CityDto.class);
+
+        Map<String, HrefBig> links=  mapper.readValue(jsonString, Map.class);
+//        Map<String, HrefBig> links = new HashMap<>();
+        links.put("self", new HrefBig("href1", false));
+        links.put("self1", new HrefBig("href23", false));
+        jsonString = mapper.writeValueAsString(links);
+
     }
 
     private static void hateaosHttp() {
@@ -130,24 +83,24 @@ public class JacksonSample {
         ResponseEntity<String> response = rest.getForEntity(url, String.class);
         ;
         ResponseEntity<Resource<City>> getResult = rest.exchange(
-                url +"/cities/1", HttpMethod.GET, null,
+                url + "/api/cities/1", HttpMethod.GET, null,
                 new ParameterizedTypeReference<Resource<City>>() {
                 });
     }
 
     private static void hateaos() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper(); // create once, reuse
-        Link link = new Link("http://localhost:8080/something","MyRel");
+        Link link = new Link("http://localhost:8080/something", "MyRel");
         String jsonString = mapper.writeValueAsString(link);
 //        {"rel":"MyRel","href":"http://localhost:8080/something"}
 
-        Resource<City> resource = new Resource<>(new City(null,"g1","r1"));
+        Resource<City> resource = new Resource<>(new City(null, "g1", "r1"));
         jsonString = mapper.writeValueAsString(resource);
 //        {"id":null,"name":"g1","region":"r1","links":[]}
 
-        resource = new Resource<>(new City(null,"g1","r1"),
-                new Link("http://localhost:8080/something","MyRel"),
-                new Link("http://localhost:8080/something1","MyRel1"));
+        resource = new Resource<>(new City(null, "g1", "r1"),
+                new Link("http://localhost:8080/something", "MyRel"),
+                new Link("http://localhost:8080/something1", "MyRel1"));
         jsonString = mapper.writeValueAsString(resource);
     }
 
