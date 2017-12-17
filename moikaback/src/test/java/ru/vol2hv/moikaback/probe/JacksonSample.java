@@ -14,6 +14,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import ru.vol2hv.moikaback.entity.City;
 import ru.vol2hv.moikaback.entity.json.HrefBig;
+import ru.vol2hv.moikaback.entity.json.ListEntityDto;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,35 +47,20 @@ public class JacksonSample {
 //        hateaos();
 //        hateaosHttp();
 //        citySample();
-        sampleN();
+        mostImportantExample();
 
     }
 
-    private static void sampleN() throws IOException {
+    private static void mostImportantExample() throws IOException {
         ObjectMapper mapper = new ObjectMapper(); // create once, reuse
         HrefBig hrefBig = new HrefBig("href1", true);
         String jsonString = mapper.writeValueAsString(hrefBig);
         jsonString = "{\"href\":\"href2\"}";
         HrefBig hrefBig1 = mapper.readValue(jsonString, HrefBig.class);
-        jsonString = "{\n" +
-                "    \"self\": {\n" +
-                "      \"href\": \"http://localhost:8080/api/cities{?page,size,sort}\",\n" +
-                "      \"templated\": true\n" +
-                "    },\n" +
-                "    \"profile\": {\n" +
-                "      \"href\": \"http://localhost:8080/api/profile/cities\"\n" +
-                "    },\n" +
-                "    \"search\": {\n" +
-                "      \"href\": \"http://localhost:8080/api/cities/search\"\n" +
-                "    }\n" +
-                "  }";
 
-        Map<String, HrefBig> links=  mapper.readValue(jsonString, Map.class);
-//        Map<String, HrefBig> links = new HashMap<>();
-        links.put("self", new HrefBig("href1", false));
-        links.put("self1", new HrefBig("href23", false));
-        jsonString = mapper.writeValueAsString(links);
-
+        ListEntityDto<City> cities = mapper.readValue(
+                new File("cities.json"),
+                ListEntityDto.class);
     }
 
     private static void hateaosHttp() {
