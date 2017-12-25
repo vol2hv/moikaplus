@@ -47,8 +47,39 @@ public class JacksonSample {
 //        hateaos();
 //        hateaosHttp();
 //        citySample();
-        mostImportantExample();
+//        mostImportantExample();
+        sampleCity();
+    }
 
+    private static void sampleCity() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonString = "[\n" +
+                "      {\n" +
+                "        \"name\": \"city2\",\n" +
+                "        \"region\": \"region2\",\n" +
+                "        \"_links\": {\n" +
+                "          \"self\": {\n" +
+                "            \"href\": \"http://localhost:8080/api/cities/2\"\n" +
+                "          },\n" +
+                "          \"city\": {\n" +
+                "            \"href\": \"http://localhost:8080/api/cities/2\"\n" +
+                "          }\n" +
+                "        }\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"name\": \"city1\",\n" +
+                "        \"region\": \"region1\",\n" +
+                "        \"_links\": {\n" +
+                "          \"self\": {\n" +
+                "            \"href\": \"http://localhost:8080/api/cities/1\"\n" +
+                "          },\n" +
+                "          \"city\": {\n" +
+                "            \"href\": \"http://localhost:8080/api/cities/1\"\n" +
+                "          }\n" +
+                "        }\n" +
+                "      }\n" +
+                "    ]";
+        List<City> cities = mapper.readValue(jsonString,  new TypeReference<List<City>>() {});
     }
 
     private static void mostImportantExample() throws IOException {
