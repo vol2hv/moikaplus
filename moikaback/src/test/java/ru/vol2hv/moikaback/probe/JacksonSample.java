@@ -44,11 +44,14 @@ public class JacksonSample {
 //        jacksonSample.simple3();
 //        hateaos();
 //        hateaosHttp();
-//        citySample();
-        sampleN();
+//        sampleN();
+//        citySample1();
+        citySample2();
+
 
     }
 
+// Чтение HrefBig
     private static void sampleN() throws IOException {
         ObjectMapper mapper = new ObjectMapper(); // create once, reuse
         HrefBig hrefBig = new HrefBig("href1",true);
@@ -56,9 +59,9 @@ public class JacksonSample {
         jsonString="{\"href\":\"href2\"}";
         HrefBig hrefBig1 = mapper.readValue(jsonString, HrefBig.class);
     }
-
-    private static void citySample() throws IOException {
-        String str1 = "{\n" +
+//    чтение ссылок из внутреннего блока _embeded
+    private static void citySample1() throws IOException {
+        String str = "{\n" +
                 "    \"self\" : {\n" +
                 "      \"href\" : \"http://localhost:8080/cities{?page,size,sort}\",\n" +
                 "      \"templated\" : true\n" +
@@ -70,6 +73,11 @@ public class JacksonSample {
                 "      \"href\" : \"http://localhost:8080/cities/search\"\n" +
                 "    }\n" +
                 "  }";
+        ObjectMapper mapper = new ObjectMapper(); // create once, reuse
+        LinksOut out = mapper.readValue(str, LinksOut.class);
+    }
+    private static void citySample2() throws IOException {
+
         String str = "{\n" +
                 "  \"_embedded\" : {\n" +
                 "    \"cities\" : [ {\n" +
@@ -116,11 +124,6 @@ public class JacksonSample {
                 "  }\n" +
                 "}";
         ObjectMapper mapper = new ObjectMapper(); // create once, reuse
-        City city = new City (null,"c","r");
-        String jsonString = mapper.writeValueAsString(city);
-        CityWithRel CityWithRel = new CityWithRel("c","r",null);
-        jsonString = mapper.writeValueAsString(CityWithRel);
-        LinksOut out = mapper.readValue(str1, LinksOut.class);
         CityDto  CityDto =  mapper.readValue(str, CityDto.class);
     }
 
@@ -150,11 +153,8 @@ public class JacksonSample {
                 new Link("http://localhost:8080/something1","MyRel1"));
         jsonString = mapper.writeValueAsString(resource);
     }
-
+//    Пример из https://github.com/FasterXML/jackson-databind/
     private void simple1() throws IOException {
-/*
-*  1 Пример из https://github.com/FasterXML/jackson-databind/
-*/
         ObjectMapper mapper = new ObjectMapper(); // create once, reuse
         // чтение
         MyValue myResultObject = mapper.readValue("{\"name\":\"Bob\", \"age\":13}", MyValue.class);
@@ -168,11 +168,8 @@ public class JacksonSample {
 //        byte[] jsonBytes = mapper.writeValueAsBytes(myResultObject);
 
     }
-
+//    Пример из https://github.com/FasterXML/jackson-databind/
     private void simple2() throws IOException {
-        /*
-        *  2 Пример из https://github.com/FasterXML/jackson-databind/
-        */
         ObjectMapper mapper = new ObjectMapper(); // create once, reuse
         // Map с Integer
         Map<String, Integer> integerMap = new HashMap<>();
@@ -197,7 +194,7 @@ public class JacksonSample {
         root.with("other").put("type", "student");
         String json = mapper.writeValueAsString(root);
     }
-
+// еше какой-то чужой пример
     private void simple3() throws IOException {
         ObjectMapper mapper = new ObjectMapper(); // create once, reuse
         JsonFactory f = mapper.getFactory(); // may alternatively construct directly too
