@@ -1,54 +1,21 @@
 package ru.vol2hv.moikaback.probe;
 
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.vol2hv.moikaback.entity.json.Page;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CityDto {
-    public Embedded _embedded;
-    private LinksOut _links;
+class ListDto<Entity>  {
+    private Map<String, List<EntityWithLinks<Entity>>> _embedded;
+    private Map<String, HrefBig> _links;
     private Page page;
-}
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-class Embedded{
-    private List<CityWithRel> cities = new ArrayList<>();
-}
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-class CityWithRel{
-    private String name;
-    private String region;
-    private LinksIn _links;
-
-}
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-class LinksIn{
-    private Href self;
-    private Href city;
-}
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-class LinksOut{
-    private HrefBig self;
-    private Href profile;
-    private Href search;
 }
 
 @Data
@@ -58,12 +25,21 @@ class  HrefBig {
     String href;
     Boolean templated;
 }
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-class Href {
-    String href;
+class EntityWithLinks<T>{
+//    private Map<String, HrefBig> _links;
+    @JsonUnwrapped
+    private  T content;
 }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class Data1 <T> {
+    private Map<String, HrefBig> _links;
+    Class<T> var;
+}
+
 
 

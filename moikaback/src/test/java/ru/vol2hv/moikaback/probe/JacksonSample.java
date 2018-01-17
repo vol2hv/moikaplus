@@ -1,9 +1,8 @@
 package ru.vol2hv.moikaback.probe;
 
-import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -17,7 +16,6 @@ import ru.vol2hv.moikaback.entity.City;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 class MyValue {
@@ -46,11 +44,19 @@ public class JacksonSample {
 //        hateaosHttp();
 //        sampleN();
 //        citySample1();
-        citySample2();
-
-
+//        citySample1a();
+//        citySample2();
+//        citySample3();
+        sampleN1();
     }
-
+    private static void sampleN1() throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String,HrefBig> link = new HashMap<>();
+        City city =new City(null, "c1","r1");
+        link.put("self",new HrefBig("href1",true));
+        Data1<City> data1 = new Data1<City>(link,City.class);
+        String jsonString = mapper.writeValueAsString(data1);
+    }
 // Чтение HrefBig
     private static void sampleN() throws IOException {
         ObjectMapper mapper = new ObjectMapper(); // create once, reuse
@@ -61,72 +67,23 @@ public class JacksonSample {
     }
 //    чтение ссылок из внутреннего блока _embeded
     private static void citySample1() throws IOException {
-        String str = "{\n" +
-                "    \"self\" : {\n" +
-                "      \"href\" : \"http://localhost:8080/cities{?page,size,sort}\",\n" +
-                "      \"templated\" : true\n" +
-                "    },\n" +
-                "    \"profile\" : {\n" +
-                "      \"href\" : \"http://localhost:8080/profile/cities\"\n" +
-                "    },\n" +
-                "    \"search\" : {\n" +
-                "      \"href\" : \"http://localhost:8080/cities/search\"\n" +
-                "    }\n" +
-                "  }";
         ObjectMapper mapper = new ObjectMapper(); // create once, reuse
-        LinksOut out = mapper.readValue(str, LinksOut.class);
+        Map<String, HrefBig> out = mapper.readValue( new File("jsonlinks"), new TypeReference< Map<String, HrefBig>>() {});
+    }
+    // чтение одной сущности City
+    private static void citySample1a() throws IOException {
+        ObjectMapper mapper = new ObjectMapper(); // create once, reuse
+        Resource<City> city = mapper.readValue(new  File("jsoncity"), new TypeReference< Resource<City>>() {});
+ //       EntityWithLinks<City> city = mapper.readValue(str, new TypeReference< EntityWithLinks<City>>() {});
     }
     private static void citySample2() throws IOException {
-
-        String str = "{\n" +
-                "  \"_embedded\" : {\n" +
-                "    \"cities\" : [ {\n" +
-                "      \"name\" : \"city1\",\n" +
-                "      \"region\" : \"region1\",\n" +
-                "      \"_links\" : {\n" +
-                "        \"self\" : {\n" +
-                "          \"href\" : \"http://localhost:8080/cities/1\"\n" +
-                "        },\n" +
-                "        \"city\" : {\n" +
-                "          \"href\" : \"http://localhost:8080/cities/1\"\n" +
-                "        }\n" +
-                "      }\n" +
-                "    }, {\n" +
-                "      \"name\" : \"city2\",\n" +
-                "      \"region\" : \"region2\",\n" +
-                "      \"_links\" : {\n" +
-                "        \"self\" : {\n" +
-                "          \"href\" : \"http://localhost:8080/cities/2\"\n" +
-                "        },\n" +
-                "        \"city\" : {\n" +
-                "          \"href\" : \"http://localhost:8080/cities/2\"\n" +
-                "        }\n" +
-                "      }\n" +
-                "    } ]\n" +
-                "  },\n" +
-                "  \"_links\" : {\n" +
-                "    \"self\" : {\n" +
-                "      \"href\" : \"http://localhost:8080/cities{?page,size,sort}\",\n" +
-                "      \"templated\" : true\n" +
-                "    },\n" +
-                "    \"profile\" : {\n" +
-                "      \"href\" : \"http://localhost:8080/profile/cities\"\n" +
-                "    },\n" +
-                "    \"search\" : {\n" +
-                "      \"href\" : \"http://localhost:8080/cities/search\"\n" +
-                "    }\n" +
-                "  },\n" +
-                "  \"page\" : {\n" +
-                "    \"size\" : 20,\n" +
-                "    \"totalElements\" : 2,\n" +
-                "    \"totalPages\" : 1,\n" +
-                "    \"number\" : 0\n" +
-                "  }\n" +
-                "}";
         ObjectMapper mapper = new ObjectMapper(); // create once, reuse
-        CityDto  CityDto =  mapper.readValue(str, CityDto.class);
+        ListDto<City>  listCityDto =  mapper.readValue(new File("jsoncities"),  new TypeReference<ListDto<City>>() {});
     }
+    private static void citySample3() throws IOException{
+        ObjectMapper mapper = new ObjectMapper();
 
+    }
     private static void hateaosHttp() {
         String url = "http://localhost:8080";
         TestRestTemplate rest = new TestRestTemplate("user", "111");
@@ -153,75 +110,4 @@ public class JacksonSample {
                 new Link("http://localhost:8080/something1","MyRel1"));
         jsonString = mapper.writeValueAsString(resource);
     }
-//    Пример из https://github.com/FasterXML/jackson-databind/
-    private void simple1() throws IOException {
-        ObjectMapper mapper = new ObjectMapper(); // create once, reuse
-        // чтение
-        MyValue myResultObject = mapper.readValue("{\"name\":\"Bob\", \"age\":13}", MyValue.class);
-//        MyValue myResultObject = mapper.readValue(new File("data.json"), MyValue.class);
-//        MyValue myResultObject = mapper.readValue(new URL("http://some.com/api/entry.json"), MyValue.class);
-
-        // Запись
-        myResultObject.name = "Pussy";
-        String jsonString = mapper.writeValueAsString(myResultObject);
-//        mapper.writeValue(new File("result.json"), myResultObject);
-//        byte[] jsonBytes = mapper.writeValueAsBytes(myResultObject);
-
-    }
-//    Пример из https://github.com/FasterXML/jackson-databind/
-    private void simple2() throws IOException {
-        ObjectMapper mapper = new ObjectMapper(); // create once, reuse
-        // Map с Integer
-        Map<String, Integer> integerMap = new HashMap<>();
-        integerMap = mapper.readValue("{\"два\":2,\"один\":1,\"три\":3}", Map.class);
-        integerMap.put("четыре", 4);
-        String jsonString = mapper.writeValueAsString(integerMap);
-        // List
-        List<String> names = mapper.readValue("[\"Name1\",\"Name2\"]", List.class);
-        names.add("Name3");
-        jsonString = mapper.writeValueAsString(names);
-        // Map с типом пользователя MyValue
-        jsonString = "{\"Запись1\":{\"name\":\"Name1\",\"age\":62},\"Запись2\":{\"name\":\"Name2\",\"age\":63}}";
-        Map<String, MyValue> results = mapper.readValue(jsonString,
-                new TypeReference<Map<String, MyValue>>() {
-                });
-        results.put("Запись3", new MyValue("Name3", 64));
-        jsonString = mapper.writeValueAsString(results);
-        // дерево узлов
-        ObjectNode root = (ObjectNode) mapper.readTree("{ \"name\" : \"Bob\", \"age\" : 13}");
-        String name = root.get("name").asText();
-        int age = root.get("age").asInt();
-        root.with("other").put("type", "student");
-        String json = mapper.writeValueAsString(root);
-    }
-// еше какой-то чужой пример
-    private void simple3() throws IOException {
-        ObjectMapper mapper = new ObjectMapper(); // create once, reuse
-        JsonFactory f = mapper.getFactory(); // may alternatively construct directly too
-// First: write simple JSON output
-        File jsonFile = new File("test.json");
-        JsonGenerator g = f.createGenerator(jsonFile, JsonEncoding.UTF8);
-// write JSON: { "message" : "Hello world!" }
-        g.writeStartObject();
-        g.writeStringField("message", "Hello world!");
-        g.writeEndObject();
-        g.close();
-
-// Second: read file back
-        JsonParser p = f.createParser(jsonFile);
-
-        JsonToken t = p.nextToken(); // Should be JsonToken.START_OBJECT
-        t = p.nextToken(); // JsonToken.FIELD_NAME
-        if ((t != JsonToken.FIELD_NAME) || !"message".equals(p.getCurrentName())) {
-            // handle error
-        }
-        t = p.nextToken();
-        if (t != JsonToken.VALUE_STRING) {
-            // similarly
-        }
-        String msg = p.getText();
-        System.out.printf("My message to you is: %s!\n", msg);
-        p.close();
-    }
-
 }

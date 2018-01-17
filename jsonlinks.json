@@ -1,0 +1,12 @@
+{
+  "self": {
+    "href": "http://localhost:8080/api/cities{?page,size,sort}",
+    "templated": true
+  },
+  "profile": {
+    "href": "http://localhost:8080/api/profile/cities"
+  },
+  "search": {
+    "href": "http://localhost:8080/api/cities/search"
+  }
+}

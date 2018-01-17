@@ -1,0 +1,12 @@
+{
+  "name": "city2",
+  "region": "region2",
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/api/cities/2"
+    },
+    "city": {
+      "href": "http://localhost:8080/api/cities/2"
+    }
+  }
+}
