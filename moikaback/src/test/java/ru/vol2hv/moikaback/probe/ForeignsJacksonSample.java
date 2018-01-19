@@ -11,6 +11,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+class MyValue {
+    public String name;
+    public int age;
+
+    public MyValue() {
+    }
+
+    public MyValue(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    // NOTE: if using getters/setters, can keep fields `protected` or `private`
+}
+
 public class ForeignsJacksonSample {
     public static void main(String[] args) throws IOException {
         ForeignsJacksonSample jacksonSample = new ForeignsJacksonSample();

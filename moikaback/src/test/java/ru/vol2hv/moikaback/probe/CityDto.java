@@ -4,20 +4,21 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.vol2hv.moikaback.entity.City;
 import ru.vol2hv.moikaback.entity.json.Page;
 
+import javax.xml.bind.annotation.XmlAnyElement;
 import java.util.List;
 import java.util.Map;
-
+// Нужные
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-class ListDto<Entity>  {
-    private Map<String, List<EntityWithLinks<Entity>>> _embedded;
+class ListFullDto<EntityDto>  {
+    private Map<String, List<EntityDto>> _embedded;
     private Map<String, HrefBig> _links;
     private Page page;
 }
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,11 +29,45 @@ class  HrefBig {
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-class EntityWithLinks<T>{
-//    private Map<String, HrefBig> _links;
-    @JsonUnwrapped
-    private  T content;
+class LinksEntity {
+    private Map<String, HrefBig> _links;
 }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class EntityDto<Entity> extends LinksEntity {
+    @JsonUnwrapped
+    @XmlAnyElement
+    private  Entity content;
+}
+//**********************************************
+// Желательно найти дрогое с обобщениями
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class CityDto extends City {
+    private Map<String, HrefBig> _links;
+}
+//**********************************************
+// поиски экспиременты
+//так не работает
+//class EntityDto<Entity> {
+//    @JsonUnwrapped
+//    @XmlAnyElement
+//    private  Entity content;
+//    private Map<String, HrefBig> _links = new HashMap<>();
+//    EntityDto(){
+//        this.content = null;
+////        this._links = null;
+//    }
+//}
+//class ResourcesOtherLinks<T> extends Resource<T> {
+//    private Map<String, String> _links = new HashMap<>();
+//    ResourcesOtherLinks(){
+//
+//    }
+//}
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
