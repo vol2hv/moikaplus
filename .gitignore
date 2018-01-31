@@ -17,3 +17,4 @@ moikafront/
 *.ipr
 
 *.log
+/HttpClientSample/api/

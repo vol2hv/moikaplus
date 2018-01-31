@@ -4,11 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.hateoas.Resource;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import ru.vol2hv.moikaback.entity.City;
 
 import java.io.File;
@@ -19,9 +14,7 @@ public class JacksonSample {
 
     public static void main(String[] args) throws IOException {
 //        withoutGeneric();
-        EntityWithLinks();
-//        sampleResourcesOtherLinks();
-
+//        EntityWithLinks();
     }
 
     // без Generic'ов
@@ -39,16 +32,5 @@ public class JacksonSample {
                 new TypeReference< EntityDto<City>>() {});
         ListFullDto<EntityDto<City>> listCityDto = mapper.readValue(new  File("jsonlistfull.json"),
                 new TypeReference<ListFullDto<EntityDto<City>>>() {});
-    }
-
-    private static void hateaosHttp() {
-        String url = "http://localhost:8080";
-        TestRestTemplate rest = new TestRestTemplate("user", "111");
-        ResponseEntity<String> response = rest.getForEntity(url, String.class);
-        ;
-        ResponseEntity<Resource<City>> getResult = rest.exchange(
-                url +"/cities/1", HttpMethod.GET, null,
-                new ParameterizedTypeReference<Resource<City>>() {
-                });
     }
 }
