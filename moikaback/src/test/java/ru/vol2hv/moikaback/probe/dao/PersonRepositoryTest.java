@@ -1,4 +1,4 @@
-package ru.vol2hv.moikaback.dao;
+package ru.vol2hv.moikaback.probe.dao;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import ru.vol2hv.moikaback.entity.Gender;
-import ru.vol2hv.moikaback.entity.Person;
+import ru.vol2hv.moikaback.probe.model.Gender;
+import ru.vol2hv.moikaback.probe.model.Person;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

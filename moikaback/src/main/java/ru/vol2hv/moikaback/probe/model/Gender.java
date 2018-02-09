@@ -1,4 +1,4 @@
-package ru.vol2hv.moikaback.entity;
+package ru.vol2hv.moikaback.probe.model;
 
 public enum Gender {
         MALE, FEMALE

@@ -1,4 +1,4 @@
-package ru.vol2hv.moikaback.entity.json;
+package ru.vol2hv.moikaback.probe.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

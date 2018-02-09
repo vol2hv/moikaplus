@@ -1,11 +1,8 @@
-package ru.vol2hv.moikaback.probe;
+package ru.vol2hv.moikaback;
 
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import ru.vol2hv.moikaback.entity.City;
 
 import java.util.Set;
 
@@ -20,19 +17,19 @@ public class CrudRestTemplate {
     }
 
     static void master(){
-        // ===1. GET ===
-        // основной метод exchange также можно использовань 	getForObject и 	getForEntity
-        ResponseEntity<ListFullDto<EntityDto<City>>> listCityDto = rest.exchange(
-                url + "/cities", HttpMethod.GET, null,
-                new ParameterizedTypeReference<ListFullDto<EntityDto<City>>>() {
-                });
-        // чтение списка городов в текстовом виде
-        ResponseEntity<String> cityListString = rest.getForEntity(url + "/cities", String.class);
-        // чтение одного города с преобразованием в POJO объект
-        ResponseEntity<EntityDto<City>> cityDto = rest.exchange(
-                url + "/cities/1", HttpMethod.GET, null,
-                new ParameterizedTypeReference<EntityDto<City>>() {
-                });
+//        // ===1. GET ===
+//        // основной метод exchange также можно использовань 	getForObject и 	getForEntity
+//        ResponseEntity<ListFullDto<EntityDto<City>>> listCityDto = rest.exchange(
+//                url + "/cities", HttpMethod.GET, null,
+//                new ParameterizedTypeReference<ListFullDto<EntityDto<City>>>() {
+//                });
+//        // чтение списка городов в текстовом виде
+//        ResponseEntity<String> cityListString = rest.getForEntity(url + "/cities", String.class);
+//        // чтение одного города с преобразованием в POJO объект
+//        ResponseEntity<EntityDto<City>> cityDto = rest.exchange(
+//                url + "/cities/1", HttpMethod.GET, null,
+//                new ParameterizedTypeReference<EntityDto<City>>() {
+//                });
 
         // ===2. POST ===
         // основной метод exchange также можно использовань postForObject postForLocation
@@ -69,11 +66,11 @@ public class CrudRestTemplate {
 //        rest.delete(url + "/cities/34");
         // ===4. Поиск ===
         // основной метод exchange также можно использовань  GET
-        listCityDto = rest.exchange(
-                "http://localhost:8080/api/cities/search/findByName?name={name}",
-                HttpMethod.GET, null,
-                new ParameterizedTypeReference<ListFullDto<EntityDto<City>>>() {},
-                "NOTold");
+//        listCityDto = rest.exchange(
+//                "http://localhost:8080/api/cities/search/findByName?name={name}",
+//                HttpMethod.GET, null,
+//                new ParameterizedTypeReference<ListFullDto<EntityDto<City>>>() {},
+//                "NOTold");
     }
 
     static void auxiliary(){

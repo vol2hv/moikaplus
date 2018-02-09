@@ -1,9 +1,9 @@
-package ru.vol2hv.moikaback.dao;
+package ru.vol2hv.moikaback.probe.dao;
 
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import ru.vol2hv.moikaback.entity.Person;
+import ru.vol2hv.moikaback.probe.model.Person;
 
 @RepositoryRestResource()
 public interface PersonRepository extends PagingAndSortingRepository<Person, Long> {

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.vol2hv.moikaback.entity.City;
+import ru.vol2hv.moikaback.probe.model.City;
 
 import java.io.File;
 import java.io.IOException;

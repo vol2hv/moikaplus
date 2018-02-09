@@ -1,4 +1,4 @@
-package ru.vol2hv.moikaback.dao;
+package ru.vol2hv.moikaback.probe.dao;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-import ru.vol2hv.moikaback.entity.City;
+import ru.vol2hv.moikaback.probe.model.City;
 import java.util.List;
 
 @RunWith(SpringRunner.class)

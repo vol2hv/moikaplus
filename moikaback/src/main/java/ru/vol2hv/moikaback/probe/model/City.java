@@ -1,4 +1,4 @@
-package ru.vol2hv.moikaback.entity;
+package ru.vol2hv.moikaback.probe.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,15 +8,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Person {
+public class City implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String name;
-    private Gender gender;
+    private String region;
 }

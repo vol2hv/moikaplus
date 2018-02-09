@@ -1,10 +1,10 @@
-package ru.vol2hv.moikaback.dao;
+package ru.vol2hv.moikaback.probe.dao;
 
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import ru.vol2hv.moikaback.entity.City;
+import ru.vol2hv.moikaback.probe.model.City;
 
 import java.util.List;
 
