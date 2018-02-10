@@ -15,6 +15,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+//import org.apache.http.client.HttpClient;
+//import org.apache.http.impl.client.HttpClientBuilder;
+
 @Data
 class SiteDTO {
     private String favicon_url;
